@@ -1,0 +1,33 @@
+body {
+}
+.mapa-medicamentos {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 200px;
+  background-color: #f05a5a;
+  color: white;
+  font-size: 53px;
+}
+.mapa-medicamentos a:hover {
+  color: white;
+  text-decoration: none;
+}
+.mapa-botoes {
+  background-color: rgb(250, 145, 145);
+  color: white;
+  font-size: 20px;
+}
+.mapa-botoes a {
+  display: flex;
+  justify-content: center;
+  color: black;
+  text-align: center;
+}
+.mapa-botoes a:hover {
+  color: black;
+}
+.search-mapa {
+  margin-top: 50px;
+  margin-bottom: 25px;
+}
