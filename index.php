@@ -4,7 +4,15 @@ include_once("php/config.php");
 
 //fetching data in descending order (lastest entry first)
 //$result = mysql_query("SELECT * FROM users ORDER BY id DESC"); // mysql_query is deprecated
-$result = mysqli_query($mysqli, "SELECT * FROM farmapas.farmacias ORDER BY id_farmacia DESC"); // using mysqli_query instead
+$result = mysqli_query($mysqli, "select 
+								f.farmacia, f.endereco, r.remedio, fd.qtd_remedio
+								from 
+								farmapas.farmacias_disp fd
+								inner join
+								farmapas.farmacias f ON f.id_farmacia = fd.id_farmacia
+								inner join
+								farmapas.remedios r ON r.id_remedio = fd.id_remedio
+								;"); // using mysqli_query instead
 ?>
 
 <html>
@@ -14,10 +22,10 @@ $result = mysqli_query($mysqli, "SELECT * FROM farmapas.farmacias ORDER BY id_fa
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 	<title>Farmapas</title>
 	<link rel="stylesheet" href="style/style.css">
-	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-	<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
-	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 </head>
 
 <body>
@@ -28,7 +36,7 @@ $result = mysqli_query($mysqli, "SELECT * FROM farmapas.farmacias ORDER BY id_fa
 		</div>
 		<div class="row mapa-botoes">
 			<div class="col-md-3">
-				<a href="/index.php">Home</a>
+				<a href="#">Home</a>
 			</div>
 			<div class="col-md-3">
 				<a href="farmacias.php">Ver farmácias cadastradas</a>
@@ -54,10 +62,10 @@ $result = mysqli_query($mysqli, "SELECT * FROM farmapas.farmacias ORDER BY id_fa
 				<table class="table" id="myTable">
 					<thead>
 						<tr>
-							<th scope="col">Nome</th>
+							<th scope="col">Farmacia</th>
 							<th scope="col">Endereço</th>
+							<th scope="col">Remedio</th>
 							<th scope="col">Quantidade</th>
-							<th scope="col"></th>
 						</tr>
 					</thead>
 					<tbody>
@@ -65,10 +73,10 @@ $result = mysqli_query($mysqli, "SELECT * FROM farmapas.farmacias ORDER BY id_fa
 						//while($res = mysql_fetch_array($result)) { // mysql_fetch_array is deprecated, we need to use mysqli_fetch_array 
 						while ($res = mysqli_fetch_array($result)) {
 							echo "<tr>";
-							echo "<td>" . $res['id_farmacia'] . "</td>";
 							echo "<td>" . $res['farmacia'] . "</td>";
 							echo "<td>" . $res['endereco'] . "</td>";
-							echo "<td><a href=\"php/edit.php?id=$res[id_farmacia]\">Edit</a> | <a href=\"php/delete.php?id=$res[id_farmacia]\" onClick=\"return confirm('Are you sure you want to delete?')\">Delete</a></td>";
+							echo "<td>" . $res['remedio'] . "</td>";
+							echo "<td>" . $res['qtd_remedio'] . "</td>";
 						}
 						?>
 					</tbody>
@@ -87,7 +95,7 @@ $result = mysqli_query($mysqli, "SELECT * FROM farmapas.farmacias ORDER BY id_fa
 		table = document.getElementById("myTable");
 		tr = table.getElementsByTagName("tr");
 		for (i = 0; i < tr.length; i++) {
-			td = tr[i].getElementsByTagName("td")[1];
+			td = tr[i].getElementsByTagName("td")[2];
 			if (td) {
 				txtValue = td.textContent || td.innerText;
 				if (txtValue.toUpperCase().indexOf(filter) > -1) {

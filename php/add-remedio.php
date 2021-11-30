@@ -11,6 +11,8 @@
 
 	if (isset($_POST['Submit'])) {
 		$remedio = mysqli_real_escape_string($mysqli, $_POST['remedio']);
+		$farmacia = mysqli_real_escape_string($mysqli, $_POST['farmacia']);
+		$qtd = mysqli_real_escape_string($mysqli, $_POST['qtd']);
 		// checking empty fields
 		if (empty($remedio)) {
 
@@ -24,7 +26,8 @@
 			// if all the fields are filled (not empty) 
 
 			//insert data to database	
-			$result = mysqli_query($mysqli, "INSERT INTO remedios (remedio) VALUES ('$remedio')");
+			mysqli_query($mysqli, "INSERT INTO ");
+			$result = mysqli_query($mysqli, "CALL farmapas.insert_remedio('$remedio', '$farmacia', $qtd);");
 			header("Location: http://localhost/Estudo/crud-php-simple/");
 		}
 	}

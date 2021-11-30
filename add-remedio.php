@@ -4,7 +4,7 @@ include_once("php/config.php");
 
 //fetching data in descending order (lastest entry first)
 //$result = mysql_query("SELECT * FROM users ORDER BY id DESC"); // mysql_query is deprecated
-$result = mysqli_query($mysqli, "SELECT * FROM farmapas.farmacias ORDER BY id_farmacia DESC"); // using mysqli_query instead
+$result = mysqli_query($mysqli, "SELECT farmacia FROM farmapas.farmacias ORDER BY id_farmacia DESC"); // using mysqli_query instead
 ?>
 
 <html>
@@ -17,7 +17,7 @@ $result = mysqli_query($mysqli, "SELECT * FROM farmapas.farmacias ORDER BY id_fa
 
 <body>
 
-    <a href="index.php" class="row mapa-medicamentos">Home</a>
+    <a href="./index.php" class="row mapa-medicamentos">Home</a>
     <br /><br />
 
     <form action="php/add-remedio.php" method="post" name="form1" style="padding:20px">
@@ -25,21 +25,21 @@ $result = mysqli_query($mysqli, "SELECT * FROM farmapas.farmacias ORDER BY id_fa
             <label for="exampleInputEmail1">Remedio</label>
             <input type="text" class="form-control" name="remedio">
         </div>
+        <div class="form-group">
+            <label for="exampleInputEmail1">Quantidade</label>
+            <input type="text" class="form-control" name="qtd">
+        </div>
         <div class="dropdown">
-            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                Farmacias
-            </button>
-            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                <a class="dropdown-item" href="#">Action</a>
-                <a class="dropdown-item" href="#">Another action</a>
-                <a class="dropdown-item" href="#">Something else here</a>
-            </div>
+            <select name="farmacia">
+                <?php
+                //while($res = mysql_fetch_array($result)) { // mysql_fetch_array is deprecated, we need to use mysqli_fetch_array 
+                while ($res = mysqli_fetch_array($result)) {
+                    echo "<option>" . $res['farmacia'] . "</option>";
+                }
+                ?>
+            </select>
         </div>
         <br>
-        <!--<div class="form-group">
-            <label for="exampleInputPassword1">Quantidade</label>
-            <input type="text" class="form-control">
-        </div>-->
         <button type="submit" name="Submit" value="Add" class="btn btn-primary">Submit</button>
     </form>
 

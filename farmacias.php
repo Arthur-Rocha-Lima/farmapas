@@ -28,7 +28,7 @@ $result = mysqli_query($mysqli, "SELECT * FROM farmapas.farmacias ORDER BY id_fa
 		</div>
 		<div class="row mapa-botoes">
 			<div class="col-md-3">
-				<a href="/index.php">Home</a>
+				<a href="./index.php">Home</a>
 			</div>
 			<div class="col-md-3">
 				<a href="">Ver farmácias cadastradas</a>
