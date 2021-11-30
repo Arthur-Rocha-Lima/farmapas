@@ -5,7 +5,7 @@ include_once("php/config.php");
 //fetching data in descending order (lastest entry first)
 //$result = mysql_query("SELECT * FROM users ORDER BY id DESC"); // mysql_query is deprecated
 $result = mysqli_query($mysqli, "select 
-								f.farmacia, f.endereco, r.remedio, fd.qtd_remedio
+								f.id_farmacia, f.farmacia, f.endereco, r.id_remedio, r.remedio, fd.qtd_remedio
 								from 
 								farmapas.farmacias_disp fd
 								inner join
@@ -77,6 +77,7 @@ $result = mysqli_query($mysqli, "select
 							echo "<td>" . $res['endereco'] . "</td>";
 							echo "<td>" . $res['remedio'] . "</td>";
 							echo "<td>" . $res['qtd_remedio'] . "</td>";
+							echo "<td><a href=\"edit-remedio.php?id=$res[id_remedio]\">Edit</a> | <a href=\"php/delete.php?id=$res[id_remedio]\" onClick=\"return confirm('Are you sure you want to delete?')\">Delete</a></td>";
 						}
 						?>
 					</tbody>

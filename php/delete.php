@@ -6,7 +6,7 @@ include("config.php");
 $id = $_GET['id'];
 
 //deleting the row from table
-$result = mysqli_query($mysqli, "DELETE FROM farmacias WHERE id_farmacia=$id");
+$result = mysqli_query($mysqli, "DELETE FROM remedios WHERE id_remedio=$id");
 
 //redirecting to the display page (index.php in our case)
 header("Location:../index.php");
